@@ -12,7 +12,7 @@ body, .app {
 
 .list-books-title {
   padding: 10px 0;
-  background: #2e7c31;
+  background: #a2b9bc;
   text-align: center;
 }
 .list-books-title h1 {
@@ -53,13 +53,14 @@ body, .app {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #2e7d32;
+  background: #6b5b95;
   background-image: url('./icons/add.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   font-size: 0;
+  cursor: pointer;
 }
 
 /* search page */
@@ -121,7 +122,12 @@ body, .app {
 
 .book {
   width: 140px;
+  opacity: 0; 
+  animation-name: show; 
+  animation-duration: 2s; 
+  animation-fill-mode: forwards;
 }
+
 .book-title,
 .book-authors {
   font-size: 0.8em;
@@ -129,6 +135,7 @@ body, .app {
 .book-title {
   margin-top: 10px;
 }
+
 .book-authors {
   color: #999;
 }
@@ -147,7 +154,7 @@ body, .app {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #60ac5d;
+  background: #8679a9;
   background-image: url('./icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -172,3 +179,72 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* loading */
+
+.loading {
+  display: block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.loading div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #a2b9bc;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.loading div:nth-child(1) {
+  left: 6px;
+  animation: loading1 0.6s infinite;
+}
+
+.loading div:nth-child(2) {
+  left: 6px;
+  animation: loading2 0.6s infinite;
+}
+
+.loading div:nth-child(3) {
+  left: 26px;
+  animation: loading2 0.6s infinite;
+}
+
+.loading div:nth-child(4) {
+  left: 45px;
+  animation: loading3 0.6s infinite;
+}
+
+@keyframes loading1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loading3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes loading2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+@keyframes show {100% {opacity:1}}

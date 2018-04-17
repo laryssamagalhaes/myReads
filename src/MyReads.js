@@ -4,24 +4,11 @@ import { NavLink } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BooksShelf from './BooksShelf';
 import Search from './Search';
+import WithAllBooks from './WithAllBooks';
 
 class MyReads extends React.Component {
-    state = {
-        books: [],
-    }
-
-    componentDidMount() {
-        this.getBooks();
-    }
-
-    getBooks = () => {
-        BooksAPI.getAll().then((books) => {
-            this.setState({ books })
-        })
-    }
-
     render() {
-        const { books } = this.state;
+        const { books } = this.props;
         const currentlyReading = books.filter(currently => currently.shelf === "currentlyReading");
         const wantToRead = books.filter(want => want.shelf === "wantToRead");
         const read = books.filter(read => read.shelf === "read");
@@ -48,4 +35,4 @@ class MyReads extends React.Component {
     }
 }
 
-export default MyReads
+export default WithAllBooks(MyReads)

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import * as BooksAPI from './BooksAPI'
 import BooksShelf from './BooksShelf';
+import WithAllBooks from './WithAllBooks';
 
 class Search extends React.Component {
     state = {
@@ -11,12 +12,27 @@ class Search extends React.Component {
         loading: false
     }
 
-    updateQuery = async (e) => {
-        this.setState({ loading: true });
-        BooksAPI.search(e).then((result) => {
-            console.log(result);
-            this.setState({ result, loading: false })
-        })
+    updateQuery = async (value) => { 
+        if(value) {
+            this.setState({ loading: true });
+            BooksAPI.search(value).then((result) => {
+                /* Isso aqui ficou mt ruim! Antes no método search a API estava retornando 
+                os shelfs e eu já estava mostrando pro usuário em qual estante o seu livro estava adicionado */
+               const resultsWithShelf = result.map((bookResult) => {
+                   this.props.books.map((book) => {
+                        if (book.id === bookResult.id) {
+                            bookResult.shelf = book.shelf;
+                        }
+                   })
+                   return bookResult;
+               })
+                this.setState({ result: resultsWithShelf, loading: false })
+            }).catch((error) => {
+                this.setState({ result: [], loading: false })
+            })
+        } else {
+            this.setState({ result: [], loading: false })
+        }
     }
 
     onUpdate = () => {
@@ -24,6 +40,7 @@ class Search extends React.Component {
             this.props.history.push("/")
         }
     }
+
     render() {
         return (
             <div className="search-books">
@@ -41,4 +58,4 @@ class Search extends React.Component {
     }
 }
 
-export default Search
+export default WithAllBooks(Search);

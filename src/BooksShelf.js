@@ -6,8 +6,9 @@ class BooksShelf extends React.Component {
     updateShelf(e, shelf) {
         BooksAPI.update(shelf, e.target.value).then((result) => {
            this.props.onUpdate();
-        })
+        });
     }
+
     render() {
         const {books, title, loading} = this.props;
         return (
@@ -15,6 +16,7 @@ class BooksShelf extends React.Component {
                 {title && (   
                     <h2 className="bookshelf-title">{title}</h2>
                 )}
+                {console.log(this.props.books)}
                 
                 {!loading ? (
                     <div className="bookshelf-books">
@@ -23,7 +25,7 @@ class BooksShelf extends React.Component {
                                 <li key={book.id}>
                                     <div className="book">
                                         <div className="book-top">
-                                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks? book.imageLinks.thumbnail : "http://via.placeholder.com/128x193"})` }}></div>
                                             <div className="book-shelf-changer">
                                                 <select 
                                                     onChange={(e) =>this.updateShelf(e, book)} 
